@@ -1,0 +1,201 @@
+doubleValues
+
+function doubleValues(arr)
+{
+    let newList = []
+    arr.forEach(function(element)
+    {
+        newList.push(element*2)
+        
+    })
+    return newList
+}
+
+onlyEvenValues
+
+function onlyEvenValues(arr)
+{
+    let newList = []
+    arr.forEach(function(element)
+    {
+        if (element%2 === 0)
+        {
+            newList.push(element)
+        }
+        
+    })
+    return newList
+}
+
+showFirstAndLast
+
+function showFirstAndLast(arr)
+{
+    let newList = []
+    arr.forEach(function(element)
+    {
+        var le = element.length
+        newList.push(element[0] + element[le-1])
+        
+    })
+    return newList
+}
+
+addKeyAndValue
+
+function addKeyAndValue(arr, key, val)
+{
+    arr.forEach(function(element)
+    {
+        //console.log(element)
+        element.key = val
+    })
+    return arr
+    
+}
+
+vowelCount
+
+function vowelCount(word)
+{
+    let newStr = word.split("")
+    let vowels = "aeiou"
+    let newObj = {}
+    newStr.forEach(function(element)
+    {
+        let allLowerCase = element.toLowerCase()
+        if(vowels.indexOf(element)!==-1)
+        {
+            if (newObj[allLowerCase])
+            {
+                newObj[allLowerCase] +=1
+            }
+            else
+            {
+                newObj[allLowerCase] = 1
+            }
+        }
+    })
+   return newObj 
+}
+
+map
+doubleValuesWithMap
+
+function doubleValuesWithMap(arr)
+{
+    return arr.map(function(element)
+    {
+        return element*2
+    })
+}
+
+doubleValuesWithMap([4,3,6])
+
+valTimesIndex
+function valTimesIndex(arr)
+{
+    let len = arr.length
+    
+    return arr.map(function(element)
+    {
+       return element*len 
+    })
+}
+
+valTimesIndex([1,2,3,5,6])
+
+extractKey
+
+function extractKey(obj, key)
+{
+    return obj.map(function(element)
+    {
+        return element[key]
+    })
+    
+}
+
+extractFullName
+function extractFullName(arr)
+{
+    return arr.map(function(element)
+    {
+        return (element.first + " " + element.last)
+    })
+}
+
+
+filter
+filterByValue
+
+
+function filterByValue(arr, key)
+{
+    return arr.filter(function(element)
+    {
+        return element[key] === true
+    })
+}
+
+
+find
+
+function find(arr,val)
+{
+    let c;
+    return arr.filter(function(element)
+    {
+        return element === val
+    })
+    
+    return c;
+}
+
+findInObj
+
+function findInObj(arr,key,val)
+{
+    
+    return arr.filter(function(element)
+    {
+        
+            return element[key] === val
+            
+        
+    })[0]
+}
+
+
+removeVowels
+
+function removeVowels(x)
+{
+    let a = x.toLowerCase()
+    let b = a.split("")
+    let vowels = "aeiou"
+    return b.filter(function(element)
+    {
+        return vowels.indexOf(element) === -1
+    }).join("")
+}
+
+doubleOddNumbers
+
+function doubleOddNumbers(arr) {
+  return arr
+    .filter(function(val) {
+      return val % 2 !== 0;
+    })
+    .map(function(val) {
+      return val * 2;
+    });
+  }
+
+
+
+
+
+
+
+
