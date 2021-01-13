@@ -1,0 +1,46 @@
+findUserByUsername
+Write a function called findUserByUsername which accepts an array of objects, 
+each with a key of username, and a string. The function should return the first object
+ with the key of username that matches the string passed to the function. 
+If the object is not found, return undefined.
+
+
+
+function findUserByUsername(arr, username)
+{
+    return arr.find(function(element)
+    {
+        return element.username ===username
+    })
+    
+}
+
+removeUser
+Write a function called removeUser which accepts an array of objects, 
+each with a key of username, and a string. The function should remove 
+the object from the array. If the object is not found, return undefined.
+
+
+function removeUser(arr,line)
+{
+  let pos = arr.findIndex(function(element)
+  {
+      return element.username === line
+  }) 
+  if (pos === -1)
+  {
+      return 
+  }
+  else
+  {
+      return arr.splice(pos,1)[0]
+  }
+}
+
+const users = [
+  {username: 'mlewis'},
+  {username: 'akagen'},
+  {username: 'msmith'}
+];
+
+removeUser(users, 'akagen')
