@@ -1,0 +1,86 @@
+1) class SerialGenerator:
+    """Machine to create unique incrementing serial numbers.
+    
+    >>> serial = SerialGenerator(start=100)
+
+    >>> serial.generate()
+    100
+
+    >>> serial.generate()
+    101
+
+    >>> serial.generate()
+    102
+
+    >>> serial.reset()
+
+    >>> serial.generate()
+    100
+    """
+
+    def __init__(self, start):
+        """Define variables"""
+        self.start= start
+        self.add = start
+        
+    def generate(self):
+        """return start incremented"""
+        self.add = self.add +1
+        return self.add -1
+    
+    def reset(self):
+        """start comesback to original value"""
+        self.add = self.start
+
+
+
+serial = SerialGenerator(100)
+print(serial.generate())
+print(serial.generate())
+print(serial.generate())
+print(serial.reset())
+print(serial.generate())
+
+2) import random
+   class WordFinder:
+	'''
+        >>> wf = WordFinder("/Users/student/words.txt")
+	3 words read
+
+	>>> wf.random()
+	'cat'
+
+	>>> wf.random()
+	'cat'
+
+	>>> wf.random()
+	'porcupine'
+
+	>>> wf.random()
+	'dog'
+	'''
+	from random import choice
+
+class WordFinder:
+    """Find a word from a file"""
+    def __init__(self, file_to_open):
+        """Locate, read file, remove \n"""
+        newList = []
+        self.count_words = newList
+        file = file_to_open  
+        with open(file_to_open, "r")as reader:
+            for line in reader.readlines():
+                c = line.replace("\n","")
+                newList.append(c)
+        print(str(len(self.count_words)) + " Words read")
+        
+    def chooseWords(self):
+        """Chose at random one of the words"""
+        return choice(self.count_words)
+                
+
+a = WordFinder("C:\\Users\\Alvendril\\Desktop\\Python TXTs\\simple.txt")
+print(a.chooseWords())
+
+		
+    
