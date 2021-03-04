@@ -1,0 +1,196 @@
+calculator.js
+
+window.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById("calc-form");
+  if (form) {
+    setupIntialValues();
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      update();
+    });
+  }
+});
+
+function getCurrentUIValues() {
+  return {
+    amount: +(document.getElementById("loan-amount").value),
+    years: +(document.getElementById("loan-years").value),
+    rate: +(document.getElementById("loan-rate").value),
+  }
+}
+
+// Get the inputs from the DOM.
+// Put some default values in the inputs
+// Call a function to calculate the current monthly payment
+function setupIntialValues() {
+  let data = {amount: 10000, years: 10, rate: 4.5};
+  let inputData = document.getElementById("loan-amount");
+  inputData.value = data.amount;
+  let years = document.getElementById("loan-years");
+  years.value = data.years;
+  let rates = document.getElementById("loan-rate");
+  rates.value = data.rate;
+  update();
+}
+
+// Get the current values from the UI
+// Update the monthly payment
+function update() {
+  let getValues = getCurrentUIValues();
+  updateMonthly(calculateMonthlyPayment(getValues));
+}
+
+// Given an object of values (a value has amount, years and rate ),
+// calculate the monthly payment.  The output should be a string
+// that always has 2 decimal places.
+function calculateMonthlyPayment(values) {
+  let monthly = ((values.rate/100)/12);
+  let n = Math.floor(values.years * 12);
+  return ((monthly* values.amount)/(1 - Math.pow((1 + monthly), -n))
+  ).toFixed(2);
+}
+
+// Given a string representing the monthly payment value,
+// update the UI to show the value.
+function updateMonthly(monthly) {
+  const monthlyShow = document.getElementById("monthly-payment").innerText = (monthly + "$");
+}
+
+
+---------------------------------------------------
+---------------------------------------------------
+---------------------------------------------------
+calculator-test
+
+it('Get the correct calculation', function () {
+  let vals = {
+    amount: 15000,
+    years: 7,
+    rate: 3.2,
+  };
+  expect(calculateMonthlyPayment(vals)).toEqual('199.55');
+});
+
+
+
+it("2 decimal places", function() {
+  let vals = {
+    amount: 25000,
+    years: 10,
+    rate: 2.5,
+  };
+  expect(calculateMonthlyPayment(vals)).toEqual('235.67');
+});
+
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+
+servers.test.js
+
+describe("Servers test (with setup and tear-down)", function() {
+  beforeEach(function () {
+    // initialization logic
+    serverNameInput.value = 'Alice';
+  });
+
+  it('should add a new server to allServers on submitServerInfo()', function () {
+    submitServerInfo();
+
+    expect(Object.keys(allServers).length).toEqual(1);
+    expect(allServers['server' + serverId].serverName).toEqual('Alice');
+  });
+
+  afterEach(function() {
+    allServers = {};
+    serverId = 0;
+    serverTbody.innerHTML = '';
+  });
+});
+
+
+--------------------------------------------------------------
+-------------------------------------------------------------
+--------------------------------------------------------------
+helpers.js
+
+// accepts 'tipAmt', 'billAmt', 'tipPercent' and sums total from allPayments objects
+function sumPaymentTotal(type) {
+  let total = 0;
+
+  for (let key in allPayments) {
+    let payment = allPayments[key];
+
+    total += Number(payment[type]);
+  }
+
+  return total;
+}
+
+// converts the bill and tip amount into a tip percent
+function calculateTipPercent(billAmt, tipAmt) {
+  return Math.round(100 / (billAmt / tipAmt));
+}
+
+// expects a table row element, appends a newly created td element from the value
+function appendTd(tr, value) {
+  let newTd = document.createElement('td');
+  newTd.innerText = value;
+
+  tr.append(newTd);
+}
+
+
+
+function Button(tr, type) {
+  let newTd = document.createElement('td');
+  newTd.className = 'deleteBtn';
+  newTd.innerText = 'X';
+  newTd.addEventListener('click', remove);
+
+  tr.append(newTd);
+}
+
+function remove(evt) {
+  let ele = evt.target.closest('tr');
+  delete allServers[ele.id];
+  ele.parentNode.removeChild(ele);
+  updateServerTable();
+}
+
+--------------------------------------------------------------
+-------------------------------------------------------------
+--------------------------------------------------------------
+
+helpers.test.js
+
+describe("Test payment", function() {
+  beforeEach(function () {
+    billAmtInput.value = 50;
+    tipAmtInput.value = 5;
+  });
+
+  it('new payment', function () {
+    submitPaymentInfo();
+
+    expect(Object.keys(allPayments).length).toEqual(1);
+    expect(allPayments['payment1'].billAmt).toEqual('50');
+    expect(allPayments['payment1'].tipAmt).toEqual('5');
+    expect(allPayments['payment1'].tipPercent).toEqual(10);
+  });
+
+  it('no payment with empty input', function () {
+    billAmtInput.value = '';
+    submitPaymentInfo();
+    expect(Object.keys(allPayments).length).toEqual(0);
+  });
+
+  it('new payment createCurPayment()', function () {
+    let expectedPayment = {
+      billAmt: '50',
+      tipAmt: '5',
+      tipPercent: 10,
+    }
+
+    expect(createCurPayment()).toEqual(expectedPayment);
+  });
