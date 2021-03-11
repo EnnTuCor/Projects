@@ -1,0 +1,93 @@
+Greet:
+
+from flask import Flask
+
+
+app=Flask(__name__)
+
+@app.route("/")
+def main():
+    return "This is the main Page"
+
+@app.route("/welcome")
+def welcome():
+    return "welcome"
+
+@app.route("/welcome/home")
+def welcome_home():
+    return "welcome home"
+
+@app.route("/welcome/back")
+def welcome_back():
+    return "welcome back"
+
+#result of the test
+
+#C:\Users\Alvendril\Documents\VSCode\Software development\DOM2\flask-greet-calc\greet>python -m unittest test.py
+#...
+#----------------------------------------------------------------------
+#Ran 3 tests in 0.007s
+
+#OK
+
+
+Calc:
+
+from flask import Flask
+from flask import request
+import operations 
+
+app=Flask(__name__)
+
+@app.route("/")
+def main():
+    return "This is the main Page"
+
+@app.route("/add")
+def add():
+    a = int(request.args.get("a"))
+    b = int(request.args.get("b"))
+    return str(operations.add(a,b))
+
+@app.route("/sub")
+def subtract():
+    a = int(request.args.get("a"))
+    b = int(request.args.get("b"))
+    return str(operations.sub(a,b))
+
+@app.route("/mult")
+def multiply():
+    a = int(request.args.get("a"))
+    b = int(request.args.get("b"))
+    return str(operations.mult(a,b))
+
+@app.route("/div")
+def division():
+    a = int(request.args.get("a"))
+    b = int(request.args.get("b"))
+    return str(operations.div(a,b))
+
+
+mathOps = {
+        "add": operations.add,
+        "sub": operations.sub,
+        "mult": operations.mult,
+        "div": operations.div,
+        }
+
+@app.route("/math/<operation>")
+def ops(operation):
+    a = int(request.args.get("a"))
+    b = int(request.args.get("b"))
+    return str(mathOps[operation](a,b))
+
+
+#result of test:
+
+#C:\Users\Alvendril\Documents\VSCode\Software development\DOM2\flask-greet-calc\calc>python -m unittest test.py
+#.....
+#----------------------------------------------------------------------
+#Ran 5 tests in 0.014s
+
+#OK
+
